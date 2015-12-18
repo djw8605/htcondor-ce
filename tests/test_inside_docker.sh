@@ -27,10 +27,13 @@ popd
 rpmbuild --define '_topdir /tmp/rpmbuild' -ba /tmp/rpmbuild/SPECS/htcondor-ce.spec
 
 # Install the /var/lock directory
-ls -l /
 
 # After building the RPM, try to install it
+
+if [ "$OS_VERSION" -ne "7"]; then
 yum localinstall -y /tmp/rpmbuild/RPMS/x86_64/htcondor-ce-client* /tmp/rpmbuild/RPMS/x86_64/htcondor-ce-${package_version}* /tmp/rpmbuild/RPMS/x86_64/htcondor-ce-view*
+
+fi
 
 ############
 # Cannot start the condor-ce service correctly on docker
